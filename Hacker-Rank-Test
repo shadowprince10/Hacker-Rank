@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* TIMELIMIT!
+void bubbleSort(int a[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (a[i] > a[j])
+            {
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+}
+*/
+
+void swap(int* num1, int* num2)
+{
+    int temp = *num1;
+    *num1 = *num2;
+    *num2 = temp;
+}
+
+// PARTITION
+int partition(int a[], int lower, int upper)
+{
+    // declare pivot
+    int pivot = a[upper];
+    int idx = lower - 1;
+
+    for (int b = lower; b < upper; b++)
+    {
+        if (a[b] <= pivot)
+        {
+            idx++;
+            swap(&a[idx], &a[b]);
+        }
+    }
+
+    swap(&a[idx + 1], &a[upper]);
+    return idx + 1;
+}
+
+// QUICK SORT
+void quick_sort(int a[], int lower, int upper)
+{
+    //int pivot = a[lower];
+    if (lower < upper)
+    {
+        int part = partition(a, lower, upper);
+        // sort the elements on the left of pivot
+        quick_sort(a, lower, part - 1);
+        // sort the elements on the right of pivot
+        quick_sort(a, part + 1, upper);
+    }
+}
+
+int main()
+{
+    int t, n;
+    scanf("%d", &t);
+
+    for (int i = 1; i <= t; i++)
+    {
+        scanf("%d", &n);
+        int a[n];
+
+        for (int j = 0; j < n; j++)
+        {
+            scanf("%d", &a[j]);
+        }
+
+        quick_sort(a, 0, n - 1);
+
+        for (int k = 0; k < n; k++)
+        {
+            printf("%d ", a[k]);
+        }
+        puts("");
+    }
+
+    return 0;
+}
